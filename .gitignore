@@ -1,1 +1,27 @@
-# empty
+*.asv
+*.png
+*.fig
+*.rar
+res1.mat
+Xprev.mat
+allwithXprev.mat
+res2.mat
+tens.mat
+test_tensorcompression.m
+uberchicken.mat
+unterchicken.mat
+!jackel2.png
+!jackel64.png
+*.pdf
+*.zip
+1212tol12.mat
+Jackals_compressed.jpg
+matlab.mat
+*.gif
+datafiles/
+~$ан статьи.docx
+*.tmp
+*.mat
+database/
+refractiveindex.info-scripts-master/
+datafiles/

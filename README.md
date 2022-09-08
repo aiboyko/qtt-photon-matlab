@@ -6,7 +6,7 @@
 If you find this code useful please cite
 
 ```
-@INPROCEEDINGS{8262141,
+@INPROCEEDINGS{qtt_photon,
   author={Boyko, Alexey I. and Oseledets, Ivan V. and Gippius, Nikolai A.},
   booktitle={2017 Progress In Electromagnetics Research Symposium - Spring (PIERS)}, 
   title={Towards solving lippmann-schwinger integral equation in 2D with polylogarithmic complexity with quantized tensor train decomposition}, 

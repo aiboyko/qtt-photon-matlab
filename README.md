@@ -11,8 +11,6 @@ If you find this code useful please cite
   booktitle={2017 Progress In Electromagnetics Research Symposium - Spring (PIERS)}, 
   title={Towards solving lippmann-schwinger integral equation in 2D with polylogarithmic complexity with quantized tensor train decomposition}, 
   year={2017},
-  volume={},
-  number={},
   pages={2329-2333},
   doi={10.1109/PIERS.2017.8262141}}
 ```

@@ -1,35 +1,36 @@
 %Purecross implemented successfully!
 
-% close all
-% dx=4;
-% dy=4;
-% d=dx+dy;
-% Nx=2^dx;
-% Ny=2^dy;
-% tol=1e-5;%1e-1*2^-dx
-% softening_coef=1e-3;
-% Lx=1;
-% Ly=1;%2*pi;
-% 
-% k0=2*pi/Lx;
-% 
-% hx=Lx/(Nx);
-% hy=Lx/(Nx);
+close all
+dx=4;
+dy=4;
+d=dx+dy;
+Nx=2^dx;
+Ny=2^dy;
+tol=1e-5;%1e-1*2^-dx
+softening_coef=1e-3;
+Lx=1;
+Ly=1;%2*pi;
+
+k0=2*pi/Lx;
+
+hx=Lx/(Nx);
+hy=Lx/(Nx);
 % 
 ttX=hx/2+hx*tt_x(2,dx);%volume-centric lattice is assumed
 ttY=hy/2+hy*tt_x(2,dy);
 % 
-% params.hx=hx;
-% params.hy=hy;
-% params.dx=dx;
-% params.dy=dy;
-% params.tol=tol;
-% params.k0=k0;
+params.hx=hx;
+params.hy=hy;
+params.dx=dx;
+params.dy=dy;
+params.tol=tol;
+params.k0=k0;
+params.quadratures.softeningcoef = softening_coef;
 
 %general approach with composition of functions
  %gh=@(xxyy) exp(1j*k0*sqrt(   (xxyy(:,1)-xxyy(:,2)).^2+(xxyy(:,3)-xxyy(:,4)).^2)  )./sqrt( (xxyy(:,1)-xxyy(:,2)).^2+(xxyy(:,3)-xxyy(:,4)).^2+tol*1e+1)
  
-gh=@(xxyy)-hx*hy* 1j/4* besselh( 0,1,k0*hx*softeningcoef+k0*sqrt(  (xxyy(:,1)-xxyy(:,2)).^2+(xxyy(:,3)-xxyy(:,4)).^2 ));
+gh=@(xxyy)-hx*hy* 1j/4* besselh( 0,1,k0*hx*softening_coef+k0*sqrt(  (xxyy(:,1)-xxyy(:,2)).^2+(xxyy(:,3)-xxyy(:,4)).^2 ));
 gh_curv2xy=@(coord) [coord(:,1).*cos(coord(:,3)),coord(:,2).*cos(coord(:,4)), coord(:,1).*sin(coord(:,3)) , coord(:,2).*sin(coord(:,4))]
 
 %direct computation woth cosine theorem
@@ -48,20 +49,32 @@ pttY2=tt_standardpermute(ttY2,tol);
 % pttv=round(amen_cross({pttX1,pttX2,pttY1,pttY2},@(x)gh(gh_curv2xy(x)),tol,...
 % 'trunc_method','svd','kickrank',100, 'nswp',50,'max_err_jumps',3,'zrank',10),tol);
 
+
 pttv=round(amen_cross({pttX1,pttX2,pttY1,pttY2},@(x)gh(x),tol,...
 'trunc_method','svd','kickrank',100, 'nswp',50,'max_err_jumps',3,'zrank',10),tol);
 modes = pttv.n(1:d);
 ttm_custom=round(tt_vec2mat(pttv),tol)
 % maxmrank=max(rank(ttm_custom))
-figure('name','ttmatrix with custom reshape');imagesc(imag(full(ttm_custom)));colormap(jet(2^12));colorbar;axis equal tight
 
+figure('name','ttmatrix with custom reshape');
+imagesc(imag(full(ttm_custom)));
+colormap(jet(2^12));
+colorbar;
+axis equal tight
+
+% LCN
 patch_for_d4=0;
 gh2=@(xxyy) gh_xxyy_LCN(xxyy,patch_for_d4,params);
 pttv2=round(amen_cross({pttX1,pttX2,pttY1,pttY2},@(x)gh2(x),tol,...
 'trunc_method','svd','kickrank',100, 'nswp',50,'max_err_jumps',3,'zrank',10),tol);
 modes = pttv2.n(1:d);
 ttm_custom2=round(tt_vec2mat(pttv2),tol)
-figure('name','ttmatrix with custom reshape and LCN function handle');imagesc(abs(full(ttm_custom2)));colormap(jet(2^12));colorbar;axis equal tight
+
+figure('name','ttmatrix with custom reshape and LCN function handle');
+imagesc(abs(full(ttm_custom2)));
+colormap(jet(2^12));
+colorbar;
+axis equal tight
 
 
 

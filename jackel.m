@@ -1,5 +1,5 @@
 %jackel compression. custom TT
-I = imread('jackel64_2.png');
+I = imread('.\data\jackel64.png');
 tol=1e-6;
 Z=zeros(64);
 jackal_params.dx=log2(size(Z,2));
@@ -28,12 +28,12 @@ imagesc(reshape(full(Z),2.^[jackal_params.dx jackal_params.dy]));
  axis equal tight;
  colorbar
  
-ttj2=phize(ttZ,gausss,jackal_params)
-%ttj3=tt_subtensor(ttj2,[1:6 ,17:17+5],ones(1,12))
+ttj2 = phize(ttZ,gausss,jackal_params)
+%ttj3 = tt_subtensor(ttj2,[1:6, 17:17+5],ones(1,12))
 
-% ttj3=tt_subtensor(ttj2,[1:6 ,ttj2.d/2:ttj2.d/2+5],ones(1,12))
+% ttj3 = tt_subtensor(ttj2,[1:6, ttj2.d/2:ttj2.d/2+5],ones(1,12))
 
-ttj3=tt_sumovermodes(ttj2,[1:6 ,ttj2.d/2+1:ttj2.d/2+6])/(2^12)
+ttj3 = tt_sumovermodes(ttj2,[1:6, ttj2.d/2+1:ttj2.d/2+6])/(2^12)
 
 fullJackals=full(ttj3);
  figure;imagesc(reshape(fullJackals,sqrt(numel(fullJackals))*[ 1 1]));
